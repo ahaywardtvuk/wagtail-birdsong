@@ -1,7 +1,6 @@
 {% extends "modeladmin/create.html" %}
 
 {% block content %}
-{% comment %}
 <div class='campaign-admin'>
     <div class='campaign-admin__form'>
         {{ block.super }}
@@ -13,7 +12,6 @@
         </iframe>
     </div>
 </div>
-{% endcomment %}
 {% endblock content %}
 {% block footer %}
     <footer>
@@ -23,13 +21,11 @@
                     {{ block.super }}
                 {% endblock %}
             </li>
-            {% comment %}
             <li class='preview'>
                 <button class="button campaign-preview icon icon-view" data-action="{{ view.create_url }}">
                     Reload preview
                 </button>
             </li>
-            {% endcomment %}
         </ul>
     </footer>
 {% endblock footer %}
