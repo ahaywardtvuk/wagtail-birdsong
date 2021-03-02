@@ -29,7 +29,7 @@
 </section>
 {% endblock %}
 {% block receipts %}
-{% if receipts %}
+{% if receipts and backend == 'SMTP' %}
 <section>
     <h2>Recipients</h2>
     <table class="listing">
@@ -46,6 +46,25 @@
                 <td>{{ receipt.contact }}</td>
                 <td>{{ receipt.success }}</td>
                 <td>{{ receipt.sent_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endif %}
+{% if receipts and backend == 'SIB' %}
+<section>
+    <h2>Recipients</h2>
+    <table class="listing">
+        <thead>
+            <tr>
+                <th>Mailing list</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for receipt in receipts %}
+            <tr>
+                <td>{{ receipt }}</td>
             </tr>
             {% endfor %}
         </tbody>

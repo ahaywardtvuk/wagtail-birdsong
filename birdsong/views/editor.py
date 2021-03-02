@@ -41,6 +41,7 @@ class InspectCampaign(InspectView):
         self.contact_class = model_admin.contact_class
 
     def get_context_data(self, **kwargs):
+        
         first_receipt = self.instance.receipts.first()
         if first_receipt:
             preview_contact = self.contact_class.objects.filter(
@@ -52,8 +53,17 @@ class InspectCampaign(InspectView):
             self.instance.get_template(self.request),
             self.instance.get_context(self.request, preview_contact),
         )
+        mailing_list = getattr(self.instance, 'mailing_lists', None)
+        if mailing_list:
+            receipts = [ mailing_list ]
+            backend = 'SIB'
+        else:
+            receipts = self.instance.receipt_set.all()
+            backend = 'SMTP'
+
         context = {
-            'receipts': self.instance.receipt_set.all(),
+            'backend': backend,
+            'receipts': receipts,
             'preview': preview
         }
         context.update(kwargs)
