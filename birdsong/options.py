@@ -1,13 +1,16 @@
-from django.conf.urls import url
+from django.conf import settings
 from django.forms import modelform_factory
 from django.http.response import HttpResponseRedirect
+from django.urls import re_path
+from django.utils.module_loading import import_string
 from wagtail.contrib.modeladmin.helpers import AdminURLHelper, ButtonHelper
 from wagtail.contrib.modeladmin.options import ModelAdmin
-from birdsong.backends.sib import SIBEmailBackend
 
 from .models import CampaignStatus, Contact
 from .views import actions
 from .views import editor as editor_views
+
+BIRDSONG_DEFAULT_BACKEND = 'birdsong.backends.smtp.SMTPEmailBackend'
 
 
 class EmailCampaignButtonHelper(ButtonHelper):
@@ -61,7 +64,10 @@ class CampaignAdmin(ModelAdmin):
     edit_view_class = editor_views.EditCampaignView
     create_view_class = editor_views.CreateCampaignView
     create_template_name = 'birdsong/editor/create_campaign.html'
-    backend_class = SIBEmailBackend
+    backend_class = import_string(
+        getattr(settings, 'BIRDSONG_BACKEND', BIRDSONG_DEFAULT_BACKEND)
+    )
+
     contact_class = Contact
     contact_filter_class = None
     # FIXME needs to be overwritable
@@ -80,7 +86,7 @@ class CampaignAdmin(ModelAdmin):
         def gen_url(pattern, view, name=None):
             if not name:
                 name = pattern
-            return url(
+            return re_path(
                 self.url_helper.get_action_url_pattern(pattern),
                 view,
                 name=self.url_helper.get_action_url_name(name)
