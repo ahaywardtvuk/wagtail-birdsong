@@ -25,7 +25,7 @@ setup(
     ],
     setup_requires=[
         'wheel',
-        'setuptools~=44.0.0'
+        'setuptools==60.8.2'
     ],
     zip_safe=False,
     license='BSD License',
