@@ -24,7 +24,8 @@ setup(
         'django-mjml',
     ],
     setup_requires=[
-        'wheel'
+        'wheel',
+        'setuptools~=65.4.0'
     ],
     zip_safe=False,
     license='BSD License',
