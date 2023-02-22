@@ -2,7 +2,7 @@
 """
 Install wagtail-birdsong using setuptools
 """
-from setuptools import find_packages, setup
+from setuptools import find_namespace_packages, setup
 
 with open('birdsong/version.py', 'r') as f:
     version = None
@@ -25,12 +25,12 @@ setup(
     ],
     setup_requires=[
         'wheel',
-        'setuptools==60.8.2'
+        'setuptools==67.4.0'
     ],
     zip_safe=False,
     license='BSD License',
 
-    packages=find_packages(exclude=['tests*']),
+    packages=find_namespace_packages(include=['birdsong.*']),
 
     include_package_data=True,
     package_data={},
@@ -45,6 +45,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Framework :: Django',
         'License :: OSI Approved :: BSD License',
     ],
