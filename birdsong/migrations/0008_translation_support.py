@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("taggit", "0003_taggeditem_add_unique_index"),
-        ("birdsong", "0007_alter_contacttag_tag"),
+        ("birdsong", "0007_alter_contacttag_tag_alter_receipt_success"),
     ]
 
     operations = [
