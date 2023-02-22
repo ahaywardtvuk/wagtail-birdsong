@@ -30,7 +30,7 @@ setup(
     zip_safe=False,
     license='BSD License',
 
-    packages=find_namespace_packages(include=['birdsong.*']),
+    packages=find_namespace_packages(include=['birdsong', 'birdsong.*']),
 
     include_package_data=True,
     package_data={},
