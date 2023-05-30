@@ -4,12 +4,15 @@ from django.http.response import HttpResponseRedirect
 from django.urls import re_path
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext as _
+from django.utils.translation import pgettext
 from wagtail.contrib.modeladmin.helpers import AdminURLHelper, ButtonHelper
 from wagtail.contrib.modeladmin.options import ModelAdmin
 
 from .models import CampaignStatus, Contact
 from .views import actions
 from .views import editor as editor_views
+
+from birdsong.conf import BIRDSONG_TEST_CONTACT
 
 BIRDSONG_DEFAULT_BACKEND = 'birdsong.backends.smtp.SMTPEmailBackend'
 
@@ -34,7 +37,7 @@ class EmailCampaignButtonHelper(ButtonHelper):
         sent = campaign.status != CampaignStatus.UNSENT
 
         delete_btn = button('delete', _('Delete'), 'no button-secondary')
-        copy_btn = button('copy', _('Copy'), 'button-secondary')
+        copy_btn = button('copy', pgettext('Verb', 'Copy'), 'button-secondary')
         if not sent:
             buttons = [
                 button('edit', _('Edit'), 'bicolor icon icon-edit'),
@@ -105,7 +108,7 @@ class CampaignAdmin(ModelAdmin):
 
     def preview(self, request, instance_pk):
         campaign = self.model.objects.get(pk=instance_pk)
-        contact = self.contact_class.objects.first()
+        contact = self.contact_class(**BIRDSONG_TEST_CONTACT)
         return editor_views.preview(request, campaign, contact)
 
     def confirm_send(self, request, instance_pk):
@@ -137,7 +140,7 @@ class CampaignAdmin(ModelAdmin):
         contacts = self.get_contacts_send_to(request)
         return actions.send_campaign(self.backend, request, campaign, contacts)
 
-    def create_contact_form(self, data=None):
+    def create_contact_form(self, data=BIRDSONG_TEST_CONTACT):
         ContactForm = modelform_factory(self.contact_class, exclude=['id'])
         if data:
             return ContactForm(data)
@@ -166,7 +169,7 @@ class CampaignAdmin(ModelAdmin):
 
     def copy(self, request, instance_pk):
         instance = self.model.objects.get(pk=instance_pk)
-        instance.name = '{} ({})'.format(instance.name, _('Copy'))
+        instance.name = '{} ({})'.format(instance.name, pgettext('noun', 'Copy'))
         instance.pk = None
         instance.id = None
         instance.sent_date = None
