@@ -8,14 +8,14 @@ INSTALLED_APPS = [
     'taggit',
     'modelcluster',
 
-    'wagtail.core',
+    'wagtail',
     'wagtail.admin',
     'wagtail.users',
     'wagtail.sites',
     'wagtail.snippets',
     'wagtail.images',
     'wagtail.documents',
-    'wagtail.contrib.modeladmin',
+    'wagtail_modeladmin',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -91,3 +91,5 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
 MEDIA_URL = '/media/'
+
+WAGTAILADMIN_BASE_URL = "localhost:8080"

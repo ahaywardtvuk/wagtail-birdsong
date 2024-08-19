@@ -29,7 +29,7 @@ Add the following to your ``INSTALLED_APPS``:
         ...
         'mjml',
         'birdsong',
-        'wagtail.contrib.modeladmin',
+        'wagtail_modeladmin',
         ...
     ]
 
@@ -69,7 +69,7 @@ for content editors to create/edit/send campaigns.
     from .models import SaleCampaign
 
     class CampaignAdmin(CampaignAdmin):
-        campaign = SaleCampaign
+        model = SaleCampaign
 
     @modeladmin_re_register
     class BirdsongAdminGroup(BirdsongAdminGroup):
